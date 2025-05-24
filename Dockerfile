@@ -9,6 +9,7 @@ RUN pip install --upgrade pip && \
 WORKDIR /app
 
 # Αντιγραφή ολόκληρου του repo (δηλαδή τον φάκελο second-order)
+#ίσως και COPY . /app
 COPY second-order /app/second-order
 
 # Ορισμός της θύρας που θα "ακούει" η εφαρμογή (voila default 8866)
