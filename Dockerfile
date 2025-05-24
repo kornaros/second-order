@@ -14,5 +14,8 @@ WORKDIR /app
 COPY . /app
 
 EXPOSE 8866
+# Στο τέλος του Dockerfile, ΠΡΙΝ το CMD
+RUN mkdir -p /home/sage/.sage && chmod -R 777 /home/sage/.sage
+ENV IPYTHONDIR=/home/sage/.sage
 
 CMD ["sage", "-python", "-m", "voila", "--port=8866", "--no-browser", "--Voila.ip=0.0.0.0"]
