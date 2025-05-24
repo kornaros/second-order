@@ -1,20 +1,18 @@
-# Base image με SageMath που περιέχει ήδη Python και Jupyter
 FROM sagemath/sagemath:10.4
 
-# Χρήση του sage -pip για εγκατάσταση voila
+# Ενημέρωση pip και εγκατάσταση voila + nbformat
 RUN sage -pip install --upgrade pip && \
-    sage -pip install --upgrade voila nbformat && \
-    sage -python -m pip install ipykernel && \
-    sage -python -m ipykernel install --name "sagemath" --display-name "SageMath"
-#είχε sage -pip install voila
-# Ορισμός του working directory μέσα στο container
-WORKDIR /app
+    sage -pip install --upgrade voila nbformat
 
-# Αντιγραφή όλων των αρχείων του repo στη ρίζα του container
+# Εγκατάσταση ipykernel
+RUN sage -python -m pip install ipykernel
+
+# Εγκατάσταση Sage kernel με αναγνωρίσιμο όνομα
+RUN sage -python -m ipykernel install --name "sagemath" --display-name "SageMath" --user
+
+WORKDIR /app
 COPY . /app
 
-# Ορισμός της θύρας που θα "ακούει" η εφαρμογή (voila default 8866)
 EXPOSE 8866
 
-# Εκκίνηση του voila πάνω στο notebook
-CMD ["sage", "-python", "-m", "voila", "second_order.ipynb", "--port=8866", "--no-browser", "--Voila.ip=0.0.0.0"]
+CMD ["sage", "-python", "-m", "voila", "--port=8866", "--no-browser", "--Voila.ip=0.0.0.0"]
