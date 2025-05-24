@@ -1,9 +1,9 @@
 # Base image με SageMath που περιέχει ήδη Python και Jupyter
 FROM sagemath/sagemath:10.4
 
-# Ενημέρωση pip και εγκατάσταση voila
-RUN pip install --upgrade pip && \
-    pip install voila
+# Χρήση του sage -pip για εγκατάσταση voila
+RUN sage -pip install --upgrade pip && \
+    sage -pip install voila
 
 # Ορισμός του working directory μέσα στο container
 WORKDIR /app
@@ -15,4 +15,4 @@ COPY . /app
 EXPOSE 8866
 
 # Εκκίνηση του voila πάνω στο notebook
-CMD ["voila", "second_order.ipynb", "--port=8866", "--no-browser", "--Voila.ip=0.0.0.0"]
+CMD ["sage", "-python3", "-m", "voila", "second_order.ipynb", "--port=8866", "--no-browser", "--Voila.ip=0.0.0.0"]
