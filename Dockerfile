@@ -6,7 +6,7 @@ RUN sage -pip install --upgrade pip && \
 
 WORKDIR /app
 COPY . /app
-
+RUN sage -python -m jupyter trust /app/second_order.ipynb
 RUN mkdir -p /home/sage/.sage && chmod -R 777 /home/sage/.sage
 ENV IPYTHONDIR=/home/sage/.sage
 
