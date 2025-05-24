@@ -3,7 +3,9 @@ FROM sagemath/sagemath:10.4
 
 # Χρήση του sage -pip για εγκατάσταση voila
 RUN sage -pip install --upgrade pip && \
-    sage -pip install --upgrade voila nbformat
+    sage -pip install --upgrade voila nbformat && \
+    sage -python -m pip install ipykernel && \
+    sage -python -m ipykernel install --name "sagemath" --display-name "SageMath"
 #είχε sage -pip install voila
 # Ορισμός του working directory μέσα στο container
 WORKDIR /app
